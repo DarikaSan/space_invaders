@@ -2,6 +2,7 @@ import pygame
 import sys
 
 from settings import Settings
+from ship import Ship
 
 class SpaceInvaders:
     """Overall class to manage game assest and behavior."""
@@ -13,6 +14,8 @@ class SpaceInvaders:
 
         self.screen = pygame.display.set_mode((self.settings.screen_width, self.settings.screen_height))
         pygame.display.set_caption("Space Invaders")
+
+        self.ship = Ship(self)
 
         #Legt die Hintergrundfarbe fest.
         self.bg_color = (230, 230,230)
@@ -27,6 +30,7 @@ class SpaceInvaders:
             
             #Zeichnet den Bildschirm bei jedem Schleifendurchlauf neu.
             self.screen.fill(self.settings.bg_color)
+            self.ship.blitme()
 
             # Macht den zuletzt gezeichneten Bildschirm sichbar.
             pygame.display.flip()
