@@ -34,17 +34,24 @@ class SpaceInvaders:
                 if event.type == pygame.QUIT:
                     sys.exit()
                 elif event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_RIGHT:
-                        self.ship.moving_right = True
-                    elif event.key == pygame.K_LEFT:
-                        self.ship.moving_left = True
+                    self._check_keydown_events(event)
                 elif event.type == pygame.KEYUP:
-                    if event.key == pygame.K_RIGHT:
+                    self._check_keyup_events(event)
+                    # Bewegt das Schiff nach rechts
+                    self.ship.rect.x += 1
+
+    def _check_keydown_events(self, event):
+        """Respond to keypresses"""
+        if event.key == pygame.K_RIGHT:
+                        self.ship.moving_right = True
+        elif event.key == pygame.K_LEFT:
+            self.ship.moving_left = True
+
+    def _check_keyup_events(self, event):
+        if event.key == pygame.K_RIGHT:
                         self.ship.moving_right = False
-                    elif event.key == pygame.K_LEFT:
-                        self.ship.moving_left = False
-                        # Bewegt das Schiff nach rechts
-                        self.ship.rect.x += 1
+        elif event.key == pygame.K_LEFT:
+            self.ship.moving_left = False
 
     def _update_screen(self):
 
