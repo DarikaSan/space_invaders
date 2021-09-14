@@ -23,17 +23,33 @@ class SpaceInvaders:
     def run_game(self):
         """Start the main loop for the game."""
         while True:
-            # Lauscht auf Tastatur- und Mausereignisse.
-            for event in pygame.event.get():
+            self._check_events()
+            self.ship.update()
+            self._update_screen()
+
+    def _check_events(self):
+        """Respond to keypress and mouse events"""
+        # Lauscht auf Tastatur- und Mausereignisse.
+        for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     sys.exit()
-            
-            #Zeichnet den Bildschirm bei jedem Schleifendurchlauf neu.
-            self.screen.fill(self.settings.bg_color)
-            self.ship.blitme()
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_RIGHT:
+                        self.ship.moving_right = True
+                elif event.type == pygame.KEYUP:
+                    if event.key == pygame.K_RIGHT:
+                        self.ship.moving_right = False
+                        # Bewegt das Schiff nach rechts
+                        self.ship.rect.x += 1
 
-            # Macht den zuletzt gezeichneten Bildschirm sichbar.
-            pygame.display.flip()
+    def _update_screen(self):
+
+        #Zeichnet den Bildschirm bei jedem Schleifendurchlauf neu.
+        self.screen.fill(self.settings.bg_color)
+        self.ship.blitme()
+
+        # Macht den zuletzt gezeichneten Bildschirm sichbar.
+        pygame.display.flip()
 
 if __name__ == '__main__':
     # Erstellteine Spielinstanz und führt das Spiel aus.

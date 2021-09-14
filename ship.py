@@ -13,6 +13,14 @@ class Ship:
         # Platziert jedes neue Schiff mittig am unteren Bildschirmrand
         self.rect.midbottom = self.screen_rect.midbottom
 
+        # Movment flag
+        self.moving_right = False
+
+    def update(self):
+        """Update the ship's positionbased on the movement flag"""
+        if self.moving_right:
+            self.rect.x += 1
+
     def blitme(self):
         """Draw the ship at its current location"""
         self.screen.blit(self.image, self.rect)
