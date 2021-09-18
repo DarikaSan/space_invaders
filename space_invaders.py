@@ -18,6 +18,7 @@ class SpaceInvaders:
         pygame.display.set_caption("Space Invaders")
 
         self.ship = Ship(self)
+        self.bullets = pygame.sprite.Group()
 
         #Legt die Hintergrundfarbe fest.
         self.bg_color = (230, 230,230)
@@ -27,6 +28,7 @@ class SpaceInvaders:
         while True:
             self._check_events()
             self.ship.update()
+            self.bullets.update()
             self._update_screen()
 
     def _check_events(self):
