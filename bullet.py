@@ -1,6 +1,7 @@
 import pygame
 from pygame.sprite import Sprite
 
+
 class Bullet(Sprite):
     """A class to manage bullets fired from the ship"""
 
@@ -11,10 +12,10 @@ class Bullet(Sprite):
         self.settings = si_game.settings
         self.color = self.settings.bullet_color
 
-        # Erstellt ein Geschossrechteck bei (0, 0) und legt dann die richtige 
+        # Erstellt ein Geschossrechteck bei (0, 0) und legt dann die richtige
         # Position fest
         self.rect = pygame.Rect(0, 0, self.settings.bullet_width,
-            self.settings.bullet_height)
+                                self.settings.bullet_height)
         self.rect.midtop = si_game.ship.rect.midtop
 
         # Speichert die Position des geschosses als Fließkommawert
@@ -22,9 +23,9 @@ class Bullet(Sprite):
 
     def update(self):
         """Move the bullet up the screen"""
-        # Aktualisiert die Flieskommaposition des Geschosses 
+        # Aktualisiert die Flieskommaposition des Geschosses
         self.y -= self.settings.bullet_speed
-        # Aktualisiert die Position des Rechtecks 
+        # Aktualisiert die Position des Rechtecks
         self.rect.y = self.y
 
     def draw_bullet(self):

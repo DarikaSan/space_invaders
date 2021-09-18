@@ -1,5 +1,6 @@
 import pygame
 
+
 class Ship:
     def __init__(self, si_game):
         """Initialize the ship and set its starting position"""
@@ -30,7 +31,7 @@ class Ship:
         if self.moving_left and self.rect.left > 0:
             self.x -= self.settings.ship_speed
 
-        #Aktualisiert das rect-Objekt auf der Grundlage von self.x
+        # Aktualisiert das rect-Objekt auf der Grundlage von self.x
         self.rect.x = self.x
 
     def blitme(self):
