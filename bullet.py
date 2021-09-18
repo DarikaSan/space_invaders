@@ -8,14 +8,14 @@ class Bullet(Sprite):
         """Create a bullet object at the ship's current position"""
         super().__init__()
         self.screen = si_game.screen
-        self.self.settings = si_game.settings
+        self.settings = si_game.settings
         self.color = self.settings.bullet_color
 
         # Erstellt ein Geschossrechteck bei (0, 0) und legt dann die richtige 
         # Position fest
         self.rect = pygame.Rect(0, 0, self.settings.bullet_width,
             self.settings.bullet_height)
-        self.recht.midtop = si_game.ship.rect.midtop
+        self.rect.midtop = si_game.ship.rect.midtop
 
         # Speichert die Position des geschosses als Fließkommawert
         self.y = float(self.rect.y)
