@@ -4,6 +4,7 @@ import sys
 from settings import Settings
 from ship import Ship
 from bullet import Bullet
+from alien import Alien
 
 
 class SpaceInvaders:
@@ -21,6 +22,9 @@ class SpaceInvaders:
 
         self.ship = Ship(self)
         self.bullets = pygame.sprite.Group()
+        self.aliens = pygame.sprite.Group()
+
+        self._create_fleet()
 
         # Legt die Hintergrundfarbe fest.
         self.bg_color = (230, 230, 230)
@@ -79,12 +83,19 @@ class SpaceInvaders:
             if bullet.rect.bottom <= 0:
                 self.bullets.remove(bullet)
 
+    def _create_fleet(self):
+        """Create the fleet of aliens"""
+        # Erstellt ein Invasionsschiff
+        alien = Alien(self)
+        self.aliens.add(alien)
+
     def _update_screen(self):
         # Zeichnet den Bildschirm bei jedem Schleifendurchlauf neu.
         self.screen.fill(self.settings.bg_color)
         self.ship.blitme()
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
+        self.aliens.draw(self.screen)
         # Macht den zuletzt gezeichneten Bildschirm sichbar.
         pygame.display.flip()
 
