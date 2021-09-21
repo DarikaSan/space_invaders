@@ -85,9 +85,22 @@ class SpaceInvaders:
 
     def _create_fleet(self):
         """Create the fleet of aliens"""
-        # Erstellt ein Invasionsschiff
+        # Erstellt ein Invasionsschiff und ermittelt die Anzahlt der
+        # Invasionsschiffel pro Zeile
+        # Der Abstand zwischen den Invasoinsschiffen beträgt jeweils eine
+        # Schiffsbreite
         alien = Alien(self)
-        self.aliens.add(alien)
+        alien_width = alien.rect.width
+        available_space_x = self.settings.screen_width - (2 * alien_width)
+        number_aliens_x = available_space_x // (2 * alien_width)
+
+        # Erstellt die erste Reihe von Invasionssiffen
+        for alien_number in range(number_aliens_x):
+            # Erstellt ein Invassionsschiff und platziert es in der Reihe
+            alien = Alien(self)
+            alien.x = alien_width + 2 * alien_width * alien_number
+            alien.rect.x = alien.x
+            self.aliens.add(alien)
 
     def _update_screen(self):
         # Zeichnet den Bildschirm bei jedem Schleifendurchlauf neu.
