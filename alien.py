@@ -9,6 +9,7 @@ class Alien(Sprite):
         """Initialize the alien and set its starting position"""
         super().__init__()
         self.screen = si_game.screen
+        self.settings = si_game.settings
 
         # Lädtdas bild des Invasionsschiffs und legt das rect-Attribut fest
         self.image = pygame.image.load('images/alien.png')
@@ -20,3 +21,8 @@ class Alien(Sprite):
 
         # Speichert die genaue Position des Invasionsschiffes
         self.x = float(self.rect.x)
+
+    def update(self):
+        """Move the alien to the right"""
+        self.x += self.settings.alien_speed
+        self.rect.x = self.x
