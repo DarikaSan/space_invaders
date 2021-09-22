@@ -101,6 +101,10 @@ class SpaceInvaders:
         self._check_fleet_edges()
         self.aliens.update()
 
+        # Prüft auf Kollision zwischen Invasoren und dem eigenen Schiff
+        if pygame.sprite.spritecollideany(self.ship, self.aliens):
+            print("Ship hit!!!")
+
     def _create_fleet(self):
         """Create the fleet of aliens"""
         # Erstellt ein Invasionsschiff und ermittelt die Anzahlt der
