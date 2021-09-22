@@ -83,9 +83,12 @@ class SpaceInvaders:
         for bullet in self.bullets.copy():
             if bullet.rect.bottom <= 0:
                 self.bullets.remove(bullet)
+            
+        self._check_bullet_alien_collisions()
 
-        # Prüft, ob Geschosse ein Invasionsschiff getroffen haben 
-        # Wenn ja, Werden das Geschoss und das getroffene Schiff entfern 
+    def _check_bullet_alien_collisions(self):
+        """Respond to bullet-aliencollisions"""
+        # Entfernt alle kollidierten Geschosse und Invasionsschiffe 
         collisions = pygame.sprite.groupcollide(self.bullets, self.aliens, True, True)
         if not self.aliens:
             # Zerstört vorhandene Geschosse und erstellt eine neue Flotte
