@@ -17,3 +17,6 @@ class Settings():
         self.bullets_allowed = 3
         # Invasionsiffeinstellung
         self.alien_speed = 1.0
+        self.fleet_drop_speed = 10
+        # Der Wert 1 für fleet_direction bedeutet "nach rechts", -1 "nach link "
+        self.fleet_direction = 1
