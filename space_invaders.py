@@ -35,6 +35,9 @@ class SpaceInvaders:
         # Legt die Hintergrundfarbe fest.
         self.bg_color = (230, 230, 230)
 
+        # Startet Space Invaders im aktiven Zustand
+        self.game_active = True
+
     def run_game(self):
         """Start the main loop for the game."""
         while True:
@@ -116,19 +119,21 @@ class SpaceInvaders:
 
     def _ship_hit(self):
         """Respond to the ship being hit by an alien"""
-        # Verringert die Anzahl der verbleibenden Schiffe
-        self.stats.ships_left -= 1
-        self
-        # Entfernt alle verbleibenden Invasionsschiffe und Geschosse
-        self.aliens.empty()
-        self.bullets.empty()
+        if self.stats.ships_left > 0:
+            # Verringert die Anzahl der verbleibenden Schiffe
+            self.stats.ships_left -= 1
+            # Entfernt alle verbleibenden Invasionsschiffe und Geschosse
+            self.aliens.empty()
+            self.bullets.empty()
 
-        # Erstellt eine neue Flotte und zentriert das eigene Schiff 
-        self._create_fleet()
-        self.ship.center_ship()
+            # Erstellt eine neue Flotte und zentriert das eigene Schiff 
+            self._create_fleet()
+            self.ship.center_ship()
 
-        # Hält das Spiel kurz an 
-        sleep(0.5)
+            # Hält das Spiel kurz an 
+            sleep(0.5)
+        else:
+            self.stats.game_active = False
 
     def _create_fleet(self):
         """Create the fleet of aliens"""
