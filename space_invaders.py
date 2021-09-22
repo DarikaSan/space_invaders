@@ -87,6 +87,10 @@ class SpaceInvaders:
         # Prüft, ob Geschosse ein Invasionsschiff getroffen haben 
         # Wenn ja, Werden das Geschoss und das getroffene Schiff entfern 
         collisions = pygame.sprite.groupcollide(self.bullets, self.aliens, True, True)
+        if not self.aliens:
+            # Zerstört vorhandene Geschosse und erstellt eine neue Flotte
+            self.bullets.empty()
+            self._create_fleet()
 
     def _update_aliens(self):
         """Check if the fleet is at an edge,
