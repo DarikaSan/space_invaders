@@ -1,7 +1,10 @@
-import pygame
 import sys
+from time import sleep
+
+import pygame
 
 from settings import Settings
+from game_stats import GameStats
 from ship import Ship
 from bullet import Bullet
 from alien import Alien
@@ -19,6 +22,9 @@ class SpaceInvaders:
         self.settings.screen_width = self.screen.get_rect().width
         self.settings.screen_height = self.screen.get_rect().height
         pygame.display.set_caption("Space Invaders")
+
+        # Erstellt eine Instanz zum Speichern der Spielstatistiken
+        self.stats = GameStats(self)
 
         self.ship = Ship(self)
         self.bullets = pygame.sprite.Group()
@@ -103,7 +109,23 @@ class SpaceInvaders:
 
         # Prüft auf Kollision zwischen Invasoren und dem eigenen Schiff
         if pygame.sprite.spritecollideany(self.ship, self.aliens):
-            print("Ship hit!!!")
+            self._ship_hit()
+
+    def _ship_hit(self):
+        """Respond to the ship being hit by an alien"""
+        # Verringert die Anzahl der verbleibenden Schiffe
+        self.stats.ships_left -= 1
+        self
+        # Entfernt alle verbleibenden Invasionsschiffe und Geschosse
+        self.aliens.empty()
+        self.bullets.empty()
+
+        # Erstellt eine neue Flotte und zentriert das eigene Schiff 
+        self._create_fleet()
+        self.ship.center_ship()
+
+        # Hält das Spiel kurz an 
+        sleep(0.5)
 
     def _create_fleet(self):
         """Create the fleet of aliens"""
