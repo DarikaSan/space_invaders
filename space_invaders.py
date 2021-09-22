@@ -84,6 +84,10 @@ class SpaceInvaders:
             if bullet.rect.bottom <= 0:
                 self.bullets.remove(bullet)
 
+        # Prüft, ob Geschosse ein Invasionsschiff getroffen haben 
+        # Wenn ja, Werden das Geschoss und das getroffene Schiff entfern 
+        collisions = pygame.sprite.groupcollide(self.bullets, self.aliens, True, True)
+
     def _update_aliens(self):
         """Check if the fleet is at an edge,
             then update the positions of all aliens in the fleet"""
