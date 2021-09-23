@@ -74,6 +74,8 @@ class SpaceInvaders:
         """Start a new game when the player clicks Play"""
         button_clicked = self.play_button.rect.collidepoint(mouse_pos)
         if button_clicked and not self.stats.game_active:
+            # Setzt die Spieleinstellungen zurück
+            self.settings.initialize_dynamic_settings()
             # Setzt die Spielstatistik zurück
             self.stats.reset_stats()
             self.stats.game_active = True
@@ -132,6 +134,7 @@ class SpaceInvaders:
             # Zerstört vorhandene Geschosse und erstellt eine neue Flotte
             self.bullets.empty()
             self._create_fleet()
+            self.settings.increase_speed()
 
     def _update_aliens(self):
         """Check if the fleet is at an edge,
