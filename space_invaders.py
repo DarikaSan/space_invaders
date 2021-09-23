@@ -5,6 +5,7 @@ import pygame
 
 from settings import Settings
 from game_stats import GameStats
+from button import Button
 from ship import Ship
 from bullet import Bullet
 from alien import Alien
@@ -32,6 +33,9 @@ class SpaceInvaders:
 
         self._create_fleet()
 
+        # Erstellt die Play-Schatfläche 
+        self.play_button = Button(self, "Play")
+
         # Legt die Hintergrundfarbe fest.
         self.bg_color = (230, 230, 230)
 
@@ -56,12 +60,34 @@ class SpaceInvaders:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_pos = pygame.mouse.get_pos()
+                self._check_play_button(mouse_pos)
             elif event.type == pygame.KEYDOWN:
                 self._check_keydown_events(event)
             elif event.type == pygame.KEYUP:
                 self._check_keyup_events(event)
                 # Bewegt das Schiff nach rechts
                 self.ship.rect.x += 1
+
+    def _check_play_button(self, mouse_pos):
+        """Start a new game when the player clicks Play"""
+        button_clicked = self.play_button.rect.collidepoint(mouse_pos)
+        if button_clicked and not self.stats.game_active:
+            # Setzt die Spielstatistik zurück
+            self.stats.reset_stats()
+            self.stats.game_active = True
+
+            # Blendet den Mauszeiger aus 
+            pygame.mouse.set_visible(False)
+
+            # Entfernt die verbliebenen Invasionsschiffe und Geschosse
+            self.aliens.empty()
+            self.bullets.empty()
+
+            # Erstellteine neue Flotte und zentriert das eigene Schiff 
+            self._create_fleet()
+            self.ship.center_ship()
 
     def _check_keydown_events(self, event):
         """Respond to keypresses"""
@@ -137,6 +163,7 @@ class SpaceInvaders:
             sleep(0.5)
         else:
             self.stats.game_active = False
+            pygame.mouse.set_visible(True)
 
     def _create_fleet(self):
         """Create the fleet of aliens"""
@@ -199,6 +226,11 @@ class SpaceInvaders:
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
         self.aliens.draw(self.screen)
+
+        # Zeichnet die Play-Schaltfläche nur bei inaktivem Spiel
+        if not self.stats.game_active:
+            self.play_button.draw_button()
+
         # Macht den zuletzt gezeichneten Bildschirm sichbar.
         pygame.display.flip()
 
