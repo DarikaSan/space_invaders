@@ -134,6 +134,10 @@ class SpaceInvaders:
         # Entfernt alle kollidierten Geschosse und Invasionsschiffe
         collisions = pygame.sprite.groupcollide(
             self.bullets, self.aliens, True, True)
+        
+        if collisions:
+            self.stats.score += self.settings.alien_points
+            self.sb.prep_score()
         if not self.aliens:
             # Zerstört vorhandene Geschosse und erstellt eine neue Flotte
             self.bullets.empty()

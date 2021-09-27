@@ -28,6 +28,8 @@ class Settings():
         self.alien_speed = 0.8 # og speed 1.0
         # Der Wert 1 für fleet_direction bedeutet "nach rechts", -1 "nach link "
         self.fleet_direction = 1
+        # Punktwertung
+        self.alien_points = 50
 
     def increase_speed(self):
         """Increase speed settings"""
