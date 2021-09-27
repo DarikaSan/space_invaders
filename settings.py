@@ -15,17 +15,17 @@ class Settings():
         self.bullet_color = (60, 60, 60)
         self.bullets_allowed = 3
         # Invasionsiffeinstellung
-        self.fleet_drop_speed = 10
+        self.fleet_drop_speed = 7 # og drop 10
         # Stärke der Beschleunigung des Spiels
-        self.speedup_scale = 1.1
+        self.speedup_scale = 1.05
 
-        self.initialize_dynamic_settings(self)
+        self.initialize_dynamic_settings()
 
     def initialize_dynamic_settings(self):
         """ Initialize settings that change thoughout the game"""
         self.ship_speed = 1.5
         self.bullet_speed = 3.0
-        self.alien_speed = 1.0
+        self.alien_speed = 0.8 # og speed 1.0
         # Der Wert 1 für fleet_direction bedeutet "nach rechts", -1 "nach link "
         self.fleet_direction = 1
 

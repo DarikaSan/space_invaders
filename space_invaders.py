@@ -5,6 +5,7 @@ import pygame
 
 from settings import Settings
 from game_stats import GameStats
+from scoreboard import Scoreboard
 from button import Button
 from ship import Ship
 from bullet import Bullet
@@ -24,8 +25,10 @@ class SpaceInvaders:
         self.settings.screen_height = self.screen.get_rect().height
         pygame.display.set_caption("Space Invaders")
 
-        # Erstellt eine Instanz zum Speichern der Spielstatistiken
+        # Bildet eine Instanz, um Spielstatistiken zu speeichern und eine
+        # Anzeigetafel zu erstellen
         self.stats = GameStats(self)
+        self.sb = Scoreboard(self)
 
         self.ship = Ship(self)
         self.bullets = pygame.sprite.Group()
@@ -33,7 +36,7 @@ class SpaceInvaders:
 
         self._create_fleet()
 
-        # Erstellt die Play-Schatfläche 
+        # Erstellt die Play-Schatfläche
         self.play_button = Button(self, "Play")
 
         # Legt die Hintergrundfarbe fest.
@@ -51,7 +54,7 @@ class SpaceInvaders:
                 self.ship.update()
                 self._update_bullets()
                 self._update_aliens()
-                
+
             self._update_screen()
 
     def _check_events(self):
@@ -80,14 +83,14 @@ class SpaceInvaders:
             self.stats.reset_stats()
             self.stats.game_active = True
 
-            # Blendet den Mauszeiger aus 
+            # Blendet den Mauszeiger aus
             pygame.mouse.set_visible(False)
 
             # Entfernt die verbliebenen Invasionsschiffe und Geschosse
             self.aliens.empty()
             self.bullets.empty()
 
-            # Erstellteine neue Flotte und zentriert das eigene Schiff 
+            # Erstellteine neue Flotte und zentriert das eigene Schiff
             self._create_fleet()
             self.ship.center_ship()
 
@@ -123,13 +126,14 @@ class SpaceInvaders:
         for bullet in self.bullets.copy():
             if bullet.rect.bottom <= 0:
                 self.bullets.remove(bullet)
-            
+
         self._check_bullet_alien_collisions()
 
     def _check_bullet_alien_collisions(self):
         """Respond to bullet-aliencollisions"""
-        # Entfernt alle kollidierten Geschosse und Invasionsschiffe 
-        collisions = pygame.sprite.groupcollide(self.bullets, self.aliens, True, True)
+        # Entfernt alle kollidierten Geschosse und Invasionsschiffe
+        collisions = pygame.sprite.groupcollide(
+            self.bullets, self.aliens, True, True)
         if not self.aliens:
             # Zerstört vorhandene Geschosse und erstellt eine neue Flotte
             self.bullets.empty()
@@ -158,11 +162,11 @@ class SpaceInvaders:
             self.aliens.empty()
             self.bullets.empty()
 
-            # Erstellt eine neue Flotte und zentriert das eigene Schiff 
+            # Erstellt eine neue Flotte und zentriert das eigene Schiff
             self._create_fleet()
             self.ship.center_ship()
 
-            # Hält das Spiel kurz an 
+            # Hält das Spiel kurz an
             sleep(0.5)
         else:
             self.stats.game_active = False
@@ -229,6 +233,9 @@ class SpaceInvaders:
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
         self.aliens.draw(self.screen)
+
+        # Zeichent die Informationen über den Punktestand
+        self.sb.show_score()
 
         # Zeichnet die Play-Schaltfläche nur bei inaktivem Spiel
         if not self.stats.game_active:
