@@ -84,6 +84,7 @@ class SpaceInvaders:
             self.stats.game_active = True
             self.sb.prep_score()
             self.sb.prep_level()
+            self.sb.prep_ships()
 
             # Blendet den Mauszeiger aus
             pygame.mouse.set_visible(False)
@@ -168,8 +169,9 @@ class SpaceInvaders:
     def _ship_hit(self):
         """Respond to the ship being hit by an alien"""
         if self.stats.ships_left > 0:
-            # Verringert die Anzahl der verbleibenden Schiffe
+            # Verringert ships_left um 1 und aktualisiert die Anzeigetafel
             self.stats.ships_left -= 1
+            self.sb.prep_ships()
             # Entfernt alle verbleibenden Invasionsschiffe und Geschosse
             self.aliens.empty()
             self.bullets.empty()
