@@ -83,6 +83,7 @@ class SpaceInvaders:
             self.stats.reset_stats()
             self.stats.game_active = True
             self.sb.prep_score()
+            self.sb.prep_level()
 
             # Blendet den Mauszeiger aus
             pygame.mouse.set_visible(False)
@@ -146,6 +147,10 @@ class SpaceInvaders:
             self.bullets.empty()
             self._create_fleet()
             self.settings.increase_speed()
+
+            # Setzt das Level herauf
+            self.stats.level += 1
+            self.sb.prep_level()
 
     def _update_aliens(self):
         """Check if the fleet is at an edge,

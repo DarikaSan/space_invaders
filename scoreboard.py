@@ -18,6 +18,7 @@ class Scoreboard:
         # Richtet das Anfangsbild für die Anzeigetafel ein
         self.prep_score()
         self.prep_high_score()
+        self.prep_level()
 
     def prep_score(self):
         """Turn the score into a rendered image"""
@@ -32,9 +33,10 @@ class Scoreboard:
         self.score_rect.top = 20
 
     def show_score(self):
-        """Draw score to the screen"""
+        """Draw score and level to the screen"""
         self.screen.blit(self.score_image, self.score_rect)
         self.screen.blit(self.high_score_image, self.high_score_rect)
+        self.screen.blit(self.level_image, self.level_rect)
 
     def prep_high_score(self):
         """Turn the high score into a rendered image"""
@@ -52,3 +54,13 @@ class Scoreboard:
         if self.stats.score > self.stats.high_score:
             self.stats.high_score = self.stats.score
             self.prep_high_score()
+
+    def prep_level(self):
+        """Turn the level into a rendered image"""
+        level_str = str(self.stats.level)
+        self.level_image = self.font.render(level_str, True, self.text_color, self.settings.bg_color)
+
+        # Platziert die Levelanzeige unter dem Punktestand
+        self.level_rect = self.level_image.get_rect()
+        self.level_rect.right = self.score_rect.right
+        self.level_rect.top = self.score_rect.bottom + 10
